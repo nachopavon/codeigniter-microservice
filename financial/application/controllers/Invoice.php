@@ -1,6 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+require_once APPPATH.'/libraries/REST_Controller.php';
+// use \Libraries\REST_Controller;
+
 class Invoice extends REST_Controller
+
 {
     // constructor for the class
     public function __construct(){

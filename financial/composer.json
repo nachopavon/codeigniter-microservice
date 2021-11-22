@@ -12,11 +12,11 @@
         "security": "composer outdated"
     },
     "require": {
-        "php": "^7",
+        "php": "^7.0|^8.0",
 		"chriskacerguis/codeigniter-restserver": "^3.0",
-		"php-amqplib/php-amqplib": "^2.10",
+		"php-amqplib/php-amqplib": "^2",
         "kenjis/ci-phpunit-test": "^0.17.0",
-        "phpunit/phpunit": "^7",
+        "phpunit/phpunit": "^7.0|^8.0",
 		"guzzlehttp/guzzle": "^6"
     }
 }
