@@ -46,7 +46,7 @@ services:
         networks:
             - default
     phpmyadmin_financial:
-        image: phpmyadmin/phpmyadmin
+        image: arm64v8/phpmyadmin
         container_name: phpmyadmin_financial
         links:
             - my_financial:my_financial
@@ -87,7 +87,7 @@ services:
         networks:
             - default
     phpmyadmin_order:
-        image: phpmyadmin/phpmyadmin
+        image: arm64v8/phpmyadmin
         container_name: phpmyadmin_order
         links:
             - my_order:my_order
@@ -132,7 +132,7 @@ services:
         networks:
             - default
     phpmyadmin_warehouse:
-        image: phpmyadmin/phpmyadmin
+        image: arm64v8/phpmyadmin
         container_name: phpmyadmin_warehouse
         links:
             - my_warehouse:my_warehouse
