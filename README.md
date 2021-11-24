@@ -9,7 +9,7 @@ There are three main decoupled service in this projects: Financial service, Orde
 - Docker Compose
 - Composer
 - Apache HTTP Server (Optional, already bundled in docker-compose)
-- PHP 7.3 (Optional, already bundled in docker-compose)
+- PHP 7.3 + tsted with php 8.0 (Optional, already bundled in docker-compose)
 - MySQL 8.0 (Optional, already bundled in docker-compose)
 - RabbitMQ (Optional, alraedy bundled in docker-compose)
 
