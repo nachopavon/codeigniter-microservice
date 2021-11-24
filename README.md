@@ -4,13 +4,15 @@ This project is a proof-of-concept of Microservice Architecture build using Code
 
 There are three main decoupled service in this projects: Financial service, Order service, and Warehouse service. Each services has its own MySQL database, in case a service need data from another service, the service will do the checking using Helper that pass message through RabbitMQ AMQP Queue. All these dependency are already packed in one docker-compose.
 
+THIS IS A SPECIFIC BRANCH FOR ARM64
+
 ## Prerequiste
 - Docker
 - Docker Compose
 - Composer
 - Apache HTTP Server (Optional, already bundled in docker-compose)
-- PHP 7.3 (Optional, already bundled in docker-compose)
-- MySQL 8.0 (Optional, already bundled in docker-compose)
+- PHP 8.0 (Optional, already bundled in docker-compose)
+- MySQL 5.6 arm64 (Optional, already bundled in docker-compose)
 - RabbitMQ (Optional, alraedy bundled in docker-compose)
 
 ## Running
