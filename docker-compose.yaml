@@ -31,12 +31,11 @@ services:
         working_dir: /var/www/html/tdd-microservice-poc
         command: bash -c "chmod +x start_worker.sh && ./start_worker.sh"
     my_financial:
-        # image: mysql/mysql-server:8.0
-        image: liupeng0518/mysql:5.7-arm64
+        image: mysql/mysql-server:8.0
         container_name: my_financial
         ports:
             - "3307:3306"
-        # command: --default-authentication-plugin=mysql_native_password
+        command: --default-authentication-plugin=mysql_native_password
         environment:
             MYSQL_ROOT_PASSWORD: test
             MYSQL_DATABASE: microservice
@@ -72,12 +71,11 @@ services:
             - default
         working_dir: /var/www/html/tdd-microservice-poc
     my_order:
-        # image: mysql/mysql-server:8.0
-        image: liupeng0518/mysql:5.7-arm64
+        image: mysql/mysql-server:8.0
         container_name: my_order
         ports:
             - "3308:3306"
-        # command: --default-authentication-plugin=mysql_native_password
+        command: --default-authentication-plugin=mysql_native_password
         environment:
             MYSQL_ROOT_PASSWORD: test
             MYSQL_DATABASE: microservice
@@ -117,12 +115,11 @@ services:
         working_dir: /var/www/html/tdd-microservice-poc
         command: bash -c "chmod +x start_worker.sh && ./start_worker.sh"
     my_warehouse:
-        # image: mysql/mysql-server:8.0
-        image: liupeng0518/mysql:5.7-arm64
+        image: mysql/mysql-server:8.0
         container_name: my_warehouse
         ports:
             - "3309:3306"
-        # command: --default-authentication-plugin=mysql_native_password
+        command: --default-authentication-plugin=mysql_native_password
         environment:
             MYSQL_ROOT_PASSWORD: test
             MYSQL_DATABASE: microservice
