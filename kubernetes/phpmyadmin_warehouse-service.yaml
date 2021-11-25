@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: /Users/nachopavon/Downloads/kompose-darwin-amd64 convert
+    kompose.version: 1.25.0 (a70f80cc)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: phpmyadmin-warehouse
+  name: phpmyadmin_warehouse
+spec:
+  ports:
+    - name: "8086"
+      port: 8086
+      targetPort: 80
+  selector:
+    io.kompose.service: phpmyadmin-warehouse
+status:
+  loadBalancer: {}

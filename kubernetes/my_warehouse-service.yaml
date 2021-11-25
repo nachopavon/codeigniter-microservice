@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: /Users/nachopavon/Downloads/kompose-darwin-amd64 convert
+    kompose.version: 1.25.0 (a70f80cc)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: my-warehouse
+  name: my_warehouse
+spec:
+  ports:
+    - name: "3309"
+      port: 3309
+      targetPort: 3306
+  selector:
+    io.kompose.service: my-warehouse
+status:
+  loadBalancer: {}

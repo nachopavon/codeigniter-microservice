@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    kompose.cmd: /Users/nachopavon/Downloads/kompose-darwin-amd64 convert
+    kompose.version: 1.25.0 (a70f80cc)
+  creationTimestamp: null
+  labels:
+    io.kompose.network/default: "true"
+    io.kompose.service: php-financial
+  name: php-financial
+spec:
+  containers:
+    - args:
+        - bash
+        - -c
+        - chmod +x start_worker.sh && ./start_worker.sh
+      image: php-financial
+      name: php-financial
+      ports:
+        - containerPort: 80
+      resources: {}
+      volumeMounts:
+        - mountPath: /var/www/html/tdd-microservice-poc
+          name: php-financial-claim0
+        - mountPath: /var/www/html/index.php
+          name: php-financial-claim1
+      workingDir: /var/www/html/tdd-microservice-poc
+  restartPolicy: OnFailure
+  volumes:
+    - name: php-financial-claim0
+      persistentVolumeClaim:
+        claimName: php-financial-claim0
+    - name: php-financial-claim1
+      persistentVolumeClaim:
+        claimName: php-financial-claim1
+status: {}

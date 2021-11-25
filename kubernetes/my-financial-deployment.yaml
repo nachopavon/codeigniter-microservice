@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /Users/nachopavon/Downloads/kompose-darwin-amd64 convert
+    kompose.version: 1.25.0 (a70f80cc)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: my-financial
+  name: my-financial
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: my-financial
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: /Users/nachopavon/Downloads/kompose-darwin-amd64 convert
+        kompose.version: 1.25.0 (a70f80cc)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/default: "true"
+        io.kompose.service: my-financial
+    spec:
+      containers:
+        - env:
+            - name: MYSQL_DATABASE
+              value: microservice
+            - name: MYSQL_PASSWORD
+              value: test
+            - name: MYSQL_ROOT_PASSWORD
+              value: test
+            - name: MYSQL_USER
+              value: user
+          image: liupeng0518/mysql:5.7-arm64
+          name: my-financial
+          ports:
+            - containerPort: 3306
+          resources: {}
+      restartPolicy: Always
+status: {}

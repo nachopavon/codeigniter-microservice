@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /Users/nachopavon/Downloads/kompose-darwin-amd64 convert
+    kompose.version: 1.25.0 (a70f80cc)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: phpmyadmin-financial
+  name: phpmyadmin-financial
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: phpmyadmin-financial
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: /Users/nachopavon/Downloads/kompose-darwin-amd64 convert
+        kompose.version: 1.25.0 (a70f80cc)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: phpmyadmin-financial
+    spec:
+      containers:
+        - env:
+            - name: MYSQL_PASSWORD
+              value: test
+            - name: MYSQL_ROOT_PASSWORD
+              value: test
+            - name: MYSQL_USER
+              value: user
+            - name: PMA_HOST
+              value: my_financial
+            - name: PMA_PORT
+              value: "3306"
+          image: arm64v8/phpmyadmin
+          name: phpmyadmin-financial
+          ports:
+            - containerPort: 80
+          resources: {}
+      restartPolicy: Always
+status: {}

@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: /Users/nachopavon/Downloads/kompose-darwin-amd64 convert
+    kompose.version: 1.25.0 (a70f80cc)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: php-order
+  name: php_order
+spec:
+  ports:
+    - name: "8082"
+      port: 8082
+      targetPort: 80
+  selector:
+    io.kompose.service: php-order
+status:
+  loadBalancer: {}

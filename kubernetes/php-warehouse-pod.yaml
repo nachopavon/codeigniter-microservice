@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    kompose.cmd: /Users/nachopavon/Downloads/kompose-darwin-amd64 convert
+    kompose.version: 1.25.0 (a70f80cc)
+  creationTimestamp: null
+  labels:
+    io.kompose.network/default: "true"
+    io.kompose.service: php-warehouse
+  name: php-warehouse
+spec:
+  containers:
+    - args:
+        - bash
+        - -c
+        - chmod +x start_worker.sh && ./start_worker.sh
+      image: php-warehouse
+      name: php-warehouse
+      ports:
+        - containerPort: 80
+      resources: {}
+      volumeMounts:
+        - mountPath: /var/www/html/tdd-microservice-poc
+          name: php-warehouse-claim0
+        - mountPath: /var/www/html/index.php
+          name: php-warehouse-claim1
+      workingDir: /var/www/html/tdd-microservice-poc
+  restartPolicy: OnFailure
+  volumes:
+    - name: php-warehouse-claim0
+      persistentVolumeClaim:
+        claimName: php-warehouse-claim0
+    - name: php-warehouse-claim1
+      persistentVolumeClaim:
+        claimName: php-warehouse-claim1
+status: {}
