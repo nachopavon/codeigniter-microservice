@@ -519,4 +519,125 @@ class Invoice_model_test extends TestCase
 
     }
 
+    public function test_create_invoice()
+    {
+        // mock affected rows
+        $db = $this->getMockBuilder('CI_DB_query_builder')
+                   ->disableOriginalConstructor()
+                   ->getMock();
+
+        $db->method('affected_rows')->willReturn(1);
+        $db->method('insert')->willReturn(true);
+
+        $this->obj->db = $db;
+
+        $data = [
+            'order_id' => '1',
+            'total' => '10000',
+            'status' => 'incomplete'
+        ];
+
+        $this->verifyInvokedOnce(
+            $db,
+            'insert',
+            ['invoice', $data]
+        );
+
+        $result = $this->obj->createInvoice($data);
+        $this->assertEquals(1, $result);
+    }
+
+    public function test_update_invoice()
+    {
+        $db = $this->getMockBuilder('CI_DB_query_builder')
+                   ->disableOriginalConstructor()
+                   ->getMock();
+
+        $db->method('affected_rows')->willReturn(1);
+        $db->method('update')->willReturn(true);
+
+        $this->obj->db = $db;
+
+        $data = ['status' => 'complete'];
+        $id = '1';
+
+        $this->verifyInvokedOnce(
+            $db,
+            'update',
+            ['invoice', $data, ['id' => $id]]
+        );
+
+        $result = $this->obj->updateInvoice($data, $id);
+        $this->assertEquals(1, $result);
+    }
+
+    public function test_delete_invoice()
+    {
+        $db = $this->getMockBuilder('CI_DB_query_builder')
+                   ->disableOriginalConstructor()
+                   ->getMock();
+
+        $db->method('affected_rows')->willReturn(1);
+        $db->method('delete')->willReturn(true);
+
+        $this->obj->db = $db;
+
+        $id = '1';
+
+        $this->verifyInvokedOnce(
+            $db,
+            'delete',
+            ['invoice', ['id' => $id]]
+        );
+
+        $result = $this->obj->deleteInvoice($id);
+        $this->assertEquals(1, $result);
+    }
+
+    public function test_update_invoice_by_order_id()
+    {
+        $db = $this->getMockBuilder('CI_DB_query_builder')
+                   ->disableOriginalConstructor()
+                   ->getMock();
+
+        $db->method('affected_rows')->willReturn(1);
+        $db->method('update')->willReturn(true);
+
+        $this->obj->db = $db;
+
+        $data = ['status' => 'complete'];
+        $order_id = '1';
+
+        $this->verifyInvokedOnce(
+            $db,
+            'update',
+            ['invoice', $data, ['order_id' => $order_id]]
+        );
+
+        $result = $this->obj->updateInvoiceByOrderId($data, $order_id);
+        $this->assertEquals(1, $result);
+    }
+
+    public function test_delete_invoice_by_order_id()
+    {
+        $db = $this->getMockBuilder('CI_DB_query_builder')
+                   ->disableOriginalConstructor()
+                   ->getMock();
+
+        $db->method('affected_rows')->willReturn(1);
+        $db->method('delete')->willReturn(true);
+
+        $this->obj->db = $db;
+
+        $order_id = '1';
+
+        $this->verifyInvokedOnce(
+            $db,
+            'delete',
+            ['invoice', ['order_id' => $order_id]]
+        );
+
+        $result = $this->obj->deleteInvoiceByOrderId($order_id);
+        $this->assertEquals(1, $result);
+    }
 }

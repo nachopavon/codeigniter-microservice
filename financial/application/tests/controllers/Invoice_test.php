@@ -512,4 +512,209 @@ class Invoice_test extends TestCase
         $this->assertStringContainsStringIgnoringCase('FALSE', $output);
 
     }
+
+    public function test_create_success()
+    {
+        $this->request->setCallable(
+            function ($CI) {
+                $model = $this->getDouble(
+                    'Invoice_model', [
+                        'createInvoice' => 1
+                    ]
+                );
+                $CI->Invoice_model = $model;
+            }
+        );
+
+        $this->request->setHeader('Content-type', 'application/json');
+
+        $data = [
+            'order_id' => '1',
+            'total' => '10000',
+            'status' => 'incomplete'
+        ];
+
+        $output = $this->request('POST', 'api/v1/invoices', $data);
+
+        $this->assertResponseCode(201);
+        $this->assertStringContainsStringIgnoringCase('TRUE', $output);
+        $this->assertStringContainsStringIgnoringCase('created successfully', $output);
+    }
+
+    public function test_create_fail()
+    {
+        $this->request->setCallable(
+            function ($CI) {
+                $model = $this->getDouble(
+                    'Invoice_model', [
+                        'createInvoice' => 0
+                    ]
+                );
+                $CI->Invoice_model = $model;
+            }
+        );
+
+        $this->request->setHeader('Content-type', 'application/json');
+
+        $data = [
+            'order_id' => '1'
+            // Datos incompletos
+        ];
+
+        $output = $this->request('POST', 'api/v1/invoices', $data);
+
+        $this->assertResponseCode(400);
+        $this->assertStringContainsStringIgnoringCase('FALSE', $output);
+    }
+
+    public function test_update_success()
+    {
+        $this->request->setCallable(
+            function ($CI) {
+                $model = $this->getDouble(
+                    'Invoice_model', [
+                        'updateInvoice' => 1,
+                        'getInvoice' => [
+                            'id' => '1',
+                            'order_id' => '1',
+                            'total' => '10000',
+                            'status' => 'complete'
+                        ]
+                    ]
+                );
+                $CI->Invoice_model = $model;
+            }
+        );
+
+        $this->request->setHeader('Content-type', 'application/json');
+
+        $data = [
+            'status' => 'complete'
+        ];
+
+        $output = $this->request('PUT', 'api/v1/invoices/1', $data);
+
+        $this->assertResponseCode(200);
+        $this->assertStringContainsStringIgnoringCase('TRUE', $output);
+        $this->assertStringContainsStringIgnoringCase('updated successfully', $output);
+    }
+
+    public function test_update_not_found()
+    {
+        $this->request->setCallable(
+            function ($CI) {
+                $model = $this->getDouble(
+                    'Invoice_model', [
+                        'updateInvoice' => 0,
+                        'getInvoice' => NULL
+                    ]
+                );
+                $CI->Invoice_model = $model;
+            }
+        );
+
+        $this->request->setHeader('Content-type', 'application/json');
+
+        $data = [
+            'status' => 'complete'
+        ];
+
+        $output = $this->request('PUT', 'api/v1/invoices/999', $data);
+
+        $this->assertResponseCode(404);
+        $this->assertStringContainsStringIgnoringCase('FALSE', $output);
+    }
+
+    public function test_delete_success()
+    {
+        $this->request->setCallable(
+            function ($CI) {
+                $model = $this->getDouble(
+                    'Invoice_model', [
+                        'deleteInvoice' => 1,
+                        'getInvoice' => [
+                            'id' => '1',
+                            'order_id' => '1',
+                            'total' => '10000',
+                            'status' => 'incomplete'
+                        ]
+                    ]
+                );
+                $CI->Invoice_model = $model;
+            }
+        );
+
+        $this->request->setHeader('Content-type', 'application/json');
+        $output = $this->request('DELETE', 'api/v1/invoices/1');
+
+        $this->assertResponseCode(200);
+        $this->assertStringContainsStringIgnoringCase('TRUE', $output);
+        $this->assertStringContainsStringIgnoringCase('deleted successfully', $output);
+    }
+
+    public function test_delete_not_found()
+    {
+        $this->request->setCallable(
+            function ($CI) {
+                $model = $this->getDouble(
+                    'Invoice_model', [
+                        'deleteInvoice' => 0,
+                        'getInvoice' => NULL
+                    ]
+                );
+                $CI->Invoice_model = $model;
+            }
+        );
+
+        $this->request->setHeader('Content-type', 'application/json');
+        $output = $this->request('DELETE', 'api/v1/invoices/999');
+
+        $this->assertResponseCode(404);
+        $this->assertStringContainsStringIgnoringCase('FALSE', $output);
+    }
+
+    public function test_update_by_order_id_success()
+    {
+        $this->request->setCallable(
+            function ($CI) {
+                $model = $this->getDouble(
+                    'Invoice_model', [
+                        'updateInvoiceByOrderId' => 1
+                    ]
+                );
+                $CI->Invoice_model = $model;
+            }
+        );
+
+        $this->request->setHeader('Content-type', 'application/json');
+
+        $data = [
+            'status' => 'complete'
+        ];
+
+        $output = $this->request('PUT', 'api/v1/invoices/order/1', $data);
+
+        $this->assertResponseCode(200);
+        $this->assertStringContainsStringIgnoringCase('TRUE', $output);
+    }
+
+    public function test_delete_by_order_id_success()
+    {
+        $this->request->setCallable(
+            function ($CI) {
+                $model = $this->getDouble(
+                    'Invoice_model', [
+                        'deleteInvoiceByOrderId' => 1
+                    ]
+                );
+                $CI->Invoice_model = $model;
+            }
+        );
+
+        $this->request->setHeader('Content-type', 'application/json');
+        $output = $this->request('DELETE', 'api/v1/invoices/order/1');
+
+        $this->assertResponseCode(200);
+        $this->assertStringContainsStringIgnoringCase('TRUE', $output);
+    }
 }
